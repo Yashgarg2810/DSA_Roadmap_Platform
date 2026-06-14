@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
+const JWT_SECRET = process.env.JWT_SECRET || 'mysecretkey123'
+
 const pool = require('./db')
 const app = express()
 
@@ -72,7 +74,7 @@ app.post('/login', async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       { id: user.rows[0].id, email: user.rows[0].email },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '1h' }
     )
 
@@ -91,7 +93,7 @@ const authenticateToken = (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'Access denied' })
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET)
+    const verified = jwt.verify(token, JWT_SECRET)
     req.user = verified
     next()
   } catch {

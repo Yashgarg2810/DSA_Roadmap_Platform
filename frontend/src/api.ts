@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: 'https://my-auth-app-production-e784.up.railway.app'
+  baseURL: 'https://my-auth-app-1-guix.onrender.com'
 })
 
 export const registerUser = (data: { name: string; email: string; password: string }) =>
